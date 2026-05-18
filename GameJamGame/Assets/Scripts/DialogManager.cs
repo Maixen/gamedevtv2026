@@ -16,12 +16,12 @@ public class DialogManager : MonoBehaviour
     {
         private enum BossFaces
         {
-            KeineÄnderung, Normal, Happy, Angry,
+            Normal, Happy, Angry,
         }
 
         private enum MCFaces
         {
-            KeineÄnderung, Normal, Happy, Angry, Sad, Suprised
+            Normal, Happy, Angry, Sad, Suprised
         }
         [SerializeField]
         private string boxContent;
@@ -77,6 +77,13 @@ public class DialogManager : MonoBehaviour
     [SerializeField] 
     private UnityEngine.UI.Image mC;
 
+    [Space]
+
+    [SerializeField]
+    private Sprite[] bossSprites;
+    [SerializeField]
+    private Sprite[] mCSprites;
+
     [SerializeField]
     [Range(10f, 100f)]
     private float charsPerSecond;
@@ -122,7 +129,9 @@ public class DialogManager : MonoBehaviour
             skip = false;
             DialogueScreen currentScreen = dialogues[index].GetBox(currentBox);
             currentBox++;
-            for(int i = 0; i < currentScreen.GetMessage().Length; i++)
+            boss.sprite = bossSprites[currentScreen.GetBossFace()];
+            mC.sprite = mCSprites[currentScreen.GetMCFace()];
+            for (int i = 0; i < currentScreen.GetMessage().Length; i++)
             {
                 if (skip)
                     break;
