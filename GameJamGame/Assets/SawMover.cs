@@ -17,7 +17,7 @@ public class SawMover : MonoBehaviour
             mousePos = hit.point;
         }
 
-        Vector3 targetPos = mousePos + Vector3.up * moveHeight;
+        Vector3 targetPos = new Vector3(mousePos.x, moveHeight, mousePos.z);
         transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed * Time.deltaTime);
     }
 }
