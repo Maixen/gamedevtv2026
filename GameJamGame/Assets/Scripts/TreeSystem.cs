@@ -10,6 +10,14 @@ public class TreeSystem : MonoBehaviour
     [SerializeField] private Vector2 spawnDelay;
     [SerializeField] private Vector2 growSizeEverySecond;
     [SerializeField] private Vector2 knockForce;
+    [SerializeField] private ParticleSystem fire;
+
+    [SerializeField] private float fireRange;
+    [SerializeField] private bool onFire;
+    [SerializeField] private float catchOnTime;
+    private float catchOnTimer;
+    [SerializeField] private float deadAfterTime;
+    private float deathTimer;
 
     private float growSize;
     private Transform tree;
@@ -18,6 +26,7 @@ public class TreeSystem : MonoBehaviour
     {
         tree = Instantiate(gameObject.GetComponentInParent<TreeManager>().getTreeAsset(), transform).transform;
         trigger = tree.GetComponent<ClickTrigger>();
+        fire.Stop();
         StartGrowing();
     }
 
@@ -26,6 +35,9 @@ public class TreeSystem : MonoBehaviour
         tree.gameObject.SetActive(true);
         growSize = Random.Range(growSizeEverySecond.x, growSizeEverySecond.y);
         tree.localScale = startSize;
+        deathTimer = 0;
+        catchOnTimer = 0;
+        Extinguish();
     }
 
     private void Update()
@@ -40,7 +52,20 @@ public class TreeSystem : MonoBehaviour
             Cut();
             tree.gameObject.SetActive(false);
         }
-            
+        if (onFire)
+        {
+            deathTimer += Time.deltaTime;
+            if (deathTimer > deadAfterTime)
+            {
+                Cut();
+                return;
+            }
+            catchOnTimer += Time.deltaTime;
+            if (catchOnTimer > catchOnTime)
+            {
+                CatchOn();
+            }
+        }   
     }
 
     public void Cut()
@@ -50,7 +75,42 @@ public class TreeSystem : MonoBehaviour
         fallingTree.AddComponent<Rigidbody>().AddForceAtPosition(new Vector3(Random.Range(-1f, 1f) * Random.Range(knockForce.x, knockForce.y), Random.Range(0.5f, 1f) * Random.Range(knockForce.x, knockForce.y), Random.Range(-1f, 1f) * Random.Range(knockForce.x, knockForce.y)), fallingTree.position + Vector3.up * fallingTree.localScale.y, ForceMode.Impulse);
         Destroy(fallingTree.gameObject, 5f);
         tree.gameObject.SetActive(false);
+        Extinguish();
+        deathTimer = 0;
+        catchOnTimer = 0;
         Invoke(nameof(StartGrowing), Random.Range(spawnDelay.x, spawnDelay.y));
+    }
+
+    public void Ignite()
+    {
+        fire.Play();
+        onFire = true;
+    }
+
+    public void Extinguish()
+    {
+        fire.Stop();
+        onFire = false;
+    }
+
+    private void CatchOn()
+    {
+        Debug.Log("Catch On");
+        Collider[] objects = Physics.OverlapSphere(transform.position, fireRange);
+        foreach (Collider obj in objects)
+        {
+            if (obj.gameObject.GetComponent<TreeSystem>() != null)
+            {
+                //if (obj.gameObject.GetComponent<TreeSystem>() == this) { return; }
+                obj.gameObject.GetComponent<TreeSystem>().Ignite();
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, fireRange);
     }
 }
 

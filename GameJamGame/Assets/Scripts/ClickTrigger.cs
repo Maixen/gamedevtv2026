@@ -10,6 +10,11 @@ public class ClickTrigger : MonoBehaviour
 
     [SerializeField] private float maxClickDelay;
 
+    private void OnEnable()
+    {
+        isClicked = false;
+    }
+
     public void Clicked()
     {
         clickedAtTime = Time.time;
