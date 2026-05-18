@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: CartoonGrass_Grass_02_LOD0
   m_Shader: {fileID: -6465566751694194690, guid: 3441feec28ea5d745b7721eea72690c7, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -17,6 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -51,8 +54,8 @@ Material:
     - BottomColor: {r: 0.23913595, g: 0.46226418, b: 0.1773466, a: 0}
     - TopColor: {r: 0.5455233, g: 0.735849, b: 0.23371299, a: 0}
     - WindDirection: {r: 1, g: 0, b: 0, a: 0}
-    - _BottomColor: {r: 0.2392157, g: 0.46274513, b: 0.1764706, a: 0}
-    - _TopColor: {r: 0.54509807, g: 0.7372549, b: 0.23529413, a: 0}
+    - _BottomColor: {r: 0.1383914, g: 0.4245283, b: 0.05807228, a: 0}
+    - _TopColor: {r: 0.7372549, g: 0.6622917, b: 0.23529409, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1230572691766249688
 MonoBehaviour:
