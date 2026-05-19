@@ -42,6 +42,7 @@ public class TreeSystem : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.paused) { return; }
         if(!tree.gameObject.activeSelf)
         {
             return;
@@ -49,20 +50,34 @@ public class TreeSystem : MonoBehaviour
         tree.localScale = tree.localScale + new Vector3(growSize * Time.deltaTime, growSize * Time.deltaTime, growSize * Time.deltaTime);
         if (trigger.isClicked)
         {
-            Cut();
-            tree.gameObject.SetActive(false);
+            switch (ModeManager.mode)
+            {
+                case Mode.None:
+                    break;
+                case Mode.Cut:
+                    Cut();
+                    tree.gameObject.SetActive(false);
+                    break;
+                case Mode.Water:
+                    Extinguish();
+                    break;
+                default:
+                    break;
+            }
         }
         if (onFire)
         {
             deathTimer += Time.deltaTime;
             if (deathTimer > deadAfterTime)
             {
+                deathTimer = 0f;
                 Cut();
                 return;
             }
             catchOnTimer += Time.deltaTime;
             if (catchOnTimer > catchOnTime)
             {
+                catchOnTimer = 0f;
                 CatchOn();
             }
         }   
@@ -83,14 +98,27 @@ public class TreeSystem : MonoBehaviour
 
     public void Ignite()
     {
-        fire.Play();
+        if (onFire) return;
+
         onFire = true;
+
+        if (!fire.isPlaying)
+        {
+            fire.Play();
+        }
     }
 
     public void Extinguish()
     {
-        fire.Stop();
         onFire = false;
+
+        deathTimer = 0;
+        catchOnTimer = 0;
+
+        if (fire.isPlaying)
+        {
+            fire.Stop();
+        }
     }
 
     private void CatchOn()

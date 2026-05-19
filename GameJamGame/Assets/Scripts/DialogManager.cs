@@ -68,6 +68,8 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    public static DialogManager instance;
+
     [SerializeField]
     private GameObject dialogBox;
     [SerializeField]
@@ -95,19 +97,27 @@ public class DialogManager : MonoBehaviour
     [SerializeField] 
     private Dialogue[] dialogues;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
+        dialogBox.SetActive(false);
         StartDialogue(0);
     }
 
     public void StartDialogue( int dialogueNum)
     {
+        dialogBox.SetActive(true);
         if (dialogueNum >= dialogues.Length)
             return;
         //Spiel pausieren
         isTyping = false;
         skip = false;
         print("Uiiai");
+        GameManager.instance.GamePauseRequest();
         StartCoroutine(DialogRoutine(dialogueNum));
     }
 
@@ -150,5 +160,7 @@ public class DialogManager : MonoBehaviour
         }
         text.text = "";
         print("Dialog fertig");
+        dialogBox.SetActive(false);
+        GameManager.instance.GameUnpauseRequest(true);
     }
 }
