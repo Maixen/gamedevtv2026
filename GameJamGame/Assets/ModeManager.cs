@@ -20,9 +20,9 @@ public class ModeManager : MonoBehaviour
         instance = this;
     }
 
-    public void ChangeMode (int mode, bool force = false)
+    public void ChangeMode (int mode)
     {
-        if (GameManager.paused && force == false) { return; }
+        if (GameManager.paused) { return; }
         if (ModeManager.mode == (Mode)mode) { mode = 0; }
         ModeManager.mode = (Mode)mode;
         Debug.Log("New mode: " + ModeManager.mode);

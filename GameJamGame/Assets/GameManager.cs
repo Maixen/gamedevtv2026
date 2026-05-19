@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
 
     public void GamePauseRequest()
     {
+        ModeManager.instance.ChangeMode(0);
         paused = true;
-        ModeManager.instance.ChangeMode(0, true);
     }
 
     public void GameUnpauseRequest(bool force)
