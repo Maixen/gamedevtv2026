@@ -9,15 +9,8 @@ public class SawMover : MonoBehaviour
 
     private void Update()
     {
-        Vector3 mousePos = Vector3.zero;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            mousePos = hit.point;
-        }
-
-        Vector3 targetPos = new Vector3(mousePos.x, moveHeight, mousePos.z);
-        transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed * Time.deltaTime);
+        if (GameManager.paused)
+            return;
+        transform.position = Vector3.Lerp(transform.position,MouseCaster.collisionPos,lerpSpeed * Time.deltaTime);
     }
 }

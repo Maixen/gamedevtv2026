@@ -121,7 +121,7 @@ public class DialogManager : MonoBehaviour
 
     private void Start()
     {
-        StartDialogue(0);
+        //StartDialogue(0);
     }
 
     public void StartDialogue( int dialogueNum)
