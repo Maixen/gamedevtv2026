@@ -6,7 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class ChaosManager : MonoBehaviour
 {
-    public static float chaosLevel = 0f;
+    public static float chaosLevel = 0f; // Zwischen 0 und 1
     public static ChaosManager instance;
 
     [SerializeField] private PostProcessProfile profile;

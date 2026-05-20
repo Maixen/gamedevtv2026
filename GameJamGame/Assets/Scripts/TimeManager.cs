@@ -27,7 +27,7 @@ public class TimeManager : MonoBehaviour
         }
         time += Time.deltaTime;
         int seconds = (int)time % 60;
-        int minutes = (int)time - seconds;
+        int minutes = (((int)time) / 60);
         string secString;
         string minString;
         if (seconds < 10)
