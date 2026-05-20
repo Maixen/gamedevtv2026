@@ -47,7 +47,7 @@ public class TreeSystem : MonoBehaviour
         {
             return;
         }
-        tree.localScale = tree.localScale + new Vector3(growSize * Time.deltaTime, growSize * Time.deltaTime, growSize * Time.deltaTime);
+        tree.localScale += new Vector3(growSize * Time.deltaTime, growSize * Time.deltaTime, growSize * Time.deltaTime);
         if (trigger.isClicked)
         {
             switch (ModeManager.mode)

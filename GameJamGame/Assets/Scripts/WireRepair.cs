@@ -77,6 +77,10 @@ public class WireRepair : MonoBehaviour
         {
             return;
         }
+        if(ModeManager.mode != Mode.Screw)
+        {
+            return;
+        }
         physics.Sleep();
         transform.position = MouseCaster.collisionPos + Vector3.up * 3;
         if(transform.position.y > maxHeight)
