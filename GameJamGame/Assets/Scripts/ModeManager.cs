@@ -19,6 +19,7 @@ public class ModeManager : MonoBehaviour
     public static Mode mode;
     public static ModeManager instance;
     [SerializeField] private GameObject[] tools;
+    [SerializeField] private Animator[] toolAnims;
 
     [SerializeField] private Sprite fuseOn, fuseOff;
     [SerializeField] private Image fuseRenderer;
@@ -134,5 +135,18 @@ public class ModeManager : MonoBehaviour
     {
         fuseRenderer.sprite = fuseOff;
         SetSwitch(false);
+    }
+
+    private void Update()
+    {
+        if(GameManager.paused)
+        {
+            return;
+        }
+        if (mode == Mode.None)
+        {
+            return;
+        }
+        toolAnims[(int)mode - 1].SetBool("Used", Input.GetMouseButton(0));
     }
 }

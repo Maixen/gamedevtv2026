@@ -10,12 +10,13 @@ public class ChoppedTreeScript : MonoBehaviour
     [SerializeField] private SphereCollider fireTrigger;
     private void OnTriggerEnter(Collider other)
     {
-        print("Trigger");
+        //Geht irgendwie net??
+        print("Trigger mit " + other.gameObject.name);
         if (!onFire) return;
-        if (other.gameObject.GetComponent<TreeSystem>() != null)
+        if (other.gameObject.GetComponentInParent<TreeSystem>() != null)
         {
             print("Baum wurde angezündet");
-            other.gameObject.GetComponent<TreeSystem>().Ignite();
+            other.gameObject.GetComponentInParent<TreeSystem>().Ignite();
         }
         if (other.gameObject.GetComponent<ChoppedTreeScript>() != null)
         {

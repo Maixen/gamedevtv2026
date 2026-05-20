@@ -284,9 +284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866ac9da38f210045903287e014f87ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstBreakWaitTime: {x: 20, y: 30}
-  breakTime: {x: 10, y: 50}
-  knockForce: {x: 1, y: 10}
+  firstBreakWaitTime: {x: 20, y: 60}
+  breakTime: {x: 10, y: 60}
+  knockForce: {x: 5, y: 10}
   repairTweenSpeed: 5
   breakable: 1
   maxHeight: 10
