@@ -47,6 +47,7 @@ public class WireRepair : MonoBehaviour
     {
         if (!breakable)
             return;
+        if (GameManager.paused == true) { return; } // Funktioniert wahrscheinlich nicht!!!
         if(!broken)
         {
             physics.Sleep();
