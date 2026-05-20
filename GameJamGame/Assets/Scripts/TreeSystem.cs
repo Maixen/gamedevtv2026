@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class TreeSystem : MonoBehaviour
 {
+    [SerializeField] private TreeManager manager;
     [SerializeField] private ClickTrigger trigger;
     [SerializeField] private Vector3 startSize;
     [SerializeField] private Vector2 spawnDelay;
     [SerializeField] private Vector2 growSizeEverySecond;
     [SerializeField] private Vector2 knockForce;
     [SerializeField] private ParticleSystem fire;
+    [SerializeField] private GameObject ChoppedTreePrefab;
 
+    [Space]
+
+    [SerializeField] private float maxHeight;
+    [SerializeField] private float minDistanceFromWire;
     [SerializeField] private float fireRange;
     [SerializeField] private bool onFire;
     [SerializeField] private float catchOnTime;
@@ -24,7 +30,8 @@ public class TreeSystem : MonoBehaviour
 
     private void Start()
     {
-        tree = Instantiate(gameObject.GetComponentInParent<TreeManager>().getTreeAsset(), transform).transform;
+        manager = GetComponentInParent<TreeManager>();
+        tree = Instantiate(manager.GetTreeAsset(), transform).transform;
         trigger = tree.GetComponent<ClickTrigger>();
         fire.Stop();
         StartGrowing();
@@ -47,7 +54,10 @@ public class TreeSystem : MonoBehaviour
         {
             return;
         }
-        tree.localScale += new Vector3(growSize * Time.deltaTime, growSize * Time.deltaTime, growSize * Time.deltaTime);
+        if(maxHeight > tree.localScale.y)
+        {
+            tree.localScale += new Vector3(growSize * Time.deltaTime, growSize * Time.deltaTime, growSize * Time.deltaTime);
+        }
         if (trigger.isClicked)
         {
             switch (ModeManager.mode)
@@ -80,17 +90,30 @@ public class TreeSystem : MonoBehaviour
                 catchOnTimer = 0f;
                 CatchOn();
             }
-        }   
+        }
+        
+        else if (manager.CheckDistanceFromPoles(tree.position,tree.position + Vector3.up * tree.localScale.y) <= minDistanceFromWire)
+        {
+            print("Der Pole ist zu nah!");
+            Ignite();
+        }
+        
     }
 
     public void Cut()
     {
         Transform fallingTree = Instantiate(tree, tree.position, Quaternion.identity);
+        ChoppedTreeScript chopped = Instantiate(ChoppedTreePrefab,fallingTree).GetComponent<ChoppedTreeScript>();
         fallingTree.gameObject.layer = 0;
         fallingTree.AddComponent<Rigidbody>().AddForceAtPosition(new Vector3(Random.Range(-1f, 1f) * Random.Range(knockForce.x, knockForce.y), Random.Range(0.5f, 1f) * Random.Range(knockForce.x, knockForce.y), Random.Range(-1f, 1f) * Random.Range(knockForce.x, knockForce.y)), fallingTree.position + Vector3.up * fallingTree.localScale.y, ForceMode.Impulse);
         Destroy(fallingTree.gameObject, 5f);
-        tree.gameObject.SetActive(false);
-        Extinguish();
+        chopped.SetFireRange(fireRange + tree.localScale.y);
+        if(onFire)
+        {
+            tree.gameObject.SetActive(false);
+            chopped.Ignite();
+            Extinguish();
+        }
         deathTimer = 0;
         catchOnTimer = 0;
         Invoke(nameof(StartGrowing), Random.Range(spawnDelay.x, spawnDelay.y));
@@ -99,8 +122,9 @@ public class TreeSystem : MonoBehaviour
     public void Ignite()
     {
         if (onFire) return;
-
+        GameManager.instance.NewProblem();
         onFire = true;
+        print("FEUER!");
 
         if (!fire.isPlaying)
         {
@@ -111,7 +135,7 @@ public class TreeSystem : MonoBehaviour
     public void Extinguish()
     {
         onFire = false;
-
+        GameManager.instance.SolvedProblem();
         deathTimer = 0;
         catchOnTimer = 0;
 
@@ -124,13 +148,17 @@ public class TreeSystem : MonoBehaviour
     private void CatchOn()
     {
         Debug.Log("Catch On");
-        Collider[] objects = Physics.OverlapSphere(transform.position, fireRange);
+        Collider[] objects = Physics.OverlapSphere(transform.position, fireRange + tree.localScale.y);
         foreach (Collider obj in objects)
         {
             if (obj.gameObject.GetComponent<TreeSystem>() != null)
             {
                 //if (obj.gameObject.GetComponent<TreeSystem>() == this) { return; }
                 obj.gameObject.GetComponent<TreeSystem>().Ignite();
+            }
+            if (obj.gameObject.GetComponent<ChoppedTreeScript>() != null)
+            {
+                obj.gameObject.GetComponent<ChoppedTreeScript>().Ignite();
             }
         }
     }

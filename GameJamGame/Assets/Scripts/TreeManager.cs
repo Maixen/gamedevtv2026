@@ -6,20 +6,25 @@ public class TreeManager : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> trees;
+    [SerializeField] private GameObject[] poleTops;
 
-    public GameObject getTreeAsset()
+    public GameObject GetTreeAsset()
     {
         return trees[Random.Range(0,trees.Count)];
     }
 
-    void Start()
+    public float CheckDistanceFromPoles(Vector3 basePos, Vector3 topPos)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        float minDist = 1000000;
+        for(int i = 0; i < poleTops.Length; i++)
+        {
+            float measuredDist = Vector3.Distance(poleTops[i].transform.position, basePos);
+            if (measuredDist < minDist)
+                minDist = measuredDist;
+            measuredDist = Vector3.Distance(poleTops[i].transform.position, topPos);
+            if (measuredDist < minDist)
+                minDist = measuredDist;
+        }
+        return minDist;
     }
 }

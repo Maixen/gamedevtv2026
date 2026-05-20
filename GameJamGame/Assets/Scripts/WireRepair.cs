@@ -61,6 +61,7 @@ public class WireRepair : MonoBehaviour
             waitedFor += Time.deltaTime;
             if (waitedFor < timeToWait)
                 return;
+            GameManager.instance.NewProblem();
             waitedFor = 0;
             helpfulSprite.enabled = true;
             broken = true;
@@ -98,6 +99,7 @@ public class WireRepair : MonoBehaviour
         physics.Sleep();
         gameObject.layer = 0;
         timeToWait = Random.Range(breakTime.x,breakTime.y);
+        GameManager.instance.SolvedProblem();
 
     }
 
