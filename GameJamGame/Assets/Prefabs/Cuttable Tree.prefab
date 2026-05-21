@@ -157,13 +157,13 @@ MonoBehaviour:
   manager: {fileID: 0}
   trigger: {fileID: 0}
   startSize: {x: 0.1, y: 0.1, z: 0.1}
-  spawnDelay: {x: 3, y: 10}
-  growSizeEverySecond: {x: 0.01, y: 0.1}
+  spawnDelay: {x: 5, y: 10}
+  growSizeEverySecond: {x: 0.01, y: 0.05}
   knockForce: {x: 5, y: 10}
   fire: {fileID: 4230129225384837027}
   ChoppedTreePrefab: {fileID: 2690742420229011154, guid: 7bb725d155e9f8b498ab747116ac2f15, type: 3}
   maxHeight: 3
-  minDistanceFromWire: 6
+  minDistanceFromWire: 3
   fireRange: 5
   onFire: 0
   catchOnTime: 5

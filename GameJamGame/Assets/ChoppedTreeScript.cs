@@ -13,10 +13,10 @@ public class ChoppedTreeScript : MonoBehaviour
         //Geht irgendwie net??
         print("Trigger mit " + other.gameObject.name);
         if (!onFire) return;
-        if (other.gameObject.GetComponentInParent<TreeSystem>() != null)
+        if (other.gameObject.GetComponent<TreeSystem>() != null)
         {
             print("Baum wurde angezündet");
-            other.gameObject.GetComponentInParent<TreeSystem>().Ignite();
+            other.gameObject.GetComponent<TreeSystem>().Ignite();
         }
         if (other.gameObject.GetComponent<ChoppedTreeScript>() != null)
         {
@@ -37,6 +37,7 @@ public class ChoppedTreeScript : MonoBehaviour
         if (onFire) return;
         if (!fire.isPlaying)
         {
+            onFire = true;
             fire.Play();
             fireTrigger.enabled = true;
         }

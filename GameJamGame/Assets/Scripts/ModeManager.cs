@@ -149,4 +149,9 @@ public class ModeManager : MonoBehaviour
         }
         toolAnims[(int)mode - 1].SetBool("Used", Input.GetMouseButton(0));
     }
+
+    public bool IsPowered()
+    {
+        return fuseIsOn;
+    }
 }

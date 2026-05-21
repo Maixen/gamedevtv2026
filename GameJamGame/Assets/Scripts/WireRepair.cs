@@ -102,9 +102,4 @@ public class WireRepair : MonoBehaviour
         GameManager.instance.SolvedProblem();
 
     }
-
-    private void Break()
-    {
-
-    }
 }

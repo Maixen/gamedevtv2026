@@ -23,8 +23,9 @@ public class MouseCaster : MonoBehaviour
     {
         if (GameManager.paused)
             return;
+        Vector2 mousePos = Input.mousePosition;
         RaycastHit hit;
-        Ray viewRay = cam.ScreenPointToRay(Input.mousePosition);
+        Ray viewRay = cam.ScreenPointToRay(mousePos);
         Physics.Raycast(viewRay, out hit);
         lastHit = hit;
         hasHit = true;
