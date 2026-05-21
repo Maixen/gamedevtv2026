@@ -1,0 +1,69 @@
+Chef: Welcome to your new, ordinary, but perfect Job!
+Im your new boss, I own that great factory here, dont disturb me!
+Your only Job is to Keep the Powerline connected, so the factory doesnt shut off.
+Choice: Understood! - F*ck off!
+1. Super. (On the Radio) *The engineer has to come NOW*
+2. TF? Bro get away, Imma give you one last Chance!
+Choice: Im sorry! - Shut up!
+1. All good. (On the Radio) *The engineer has to come NOW*
+2. Imma cut your salary by 120%. You owe me Money by the end of the month!
+(On the Radio) *The engineer has to come NOW*
+
+Engineer:
+H - … H - … Hi. Uh...
+Im the engineer here in the factory.
+MC: Nice to meet you
+Engineer: Yeah yeah, uh...
+So let me tell you what you Need to do!
+Uh … … 
+So … … 
+You have 3 Tools for now, a saw for cutting down trees, a watering can to extinguish possible fires and a screw Driver.
+Ist very easy: If trees grow to high, they might ignite. So you Need to cut them. If something catches fire anyway, use the watering can immedeatly.
+And sometimes the cables get dissattached. Use the screw Driver to pick them up and reconnect them.
+Whenever something happens, the main braker fuse activates and the power turns off. So after Fixing, you will have to turn it on again. Dont leave it off for too Long, Mr. CEO gets very, VERY mad.
+Choice: Thanks! - Could you repeat that?
+1. Your welcome...
+2. ! Go back to: You have…
+Good luck…
+Youll Need it...
+…
+
+Police: Local Police Departement here, what are you Dumping into the water?
+Choice: Wasnt me - Yo mamma
+1. Bruh… Who is Dumping something in there?
+Choice: My boss - Yo mamma
+	1. Aight… Imma talk to him. But I have my eyes on you!
+	2. Idiot. You think you are funny. Imma place a Warrant on you later. Cuz I can. Imma talk to your boss.
+2. HahahahahahahahahahahhAHAHHAHHHHHAAHAHAHAHAHAH…
+Think your funny huh. Imma place a Warrant on you! Stupid idiot. No mamma jokes with me! Imma talk to your boss!
+
+Chef: Bro what did you say to the dumb Police officer?
+Choice: Nothing - Bro go away
+1. Yeah yeah yeah… uuuuuuhhhhhhh, were only doing LEGAL businness here, never doubt that. Understood? You Arent alllowed to answer!!!
+2. Bruh.
+
+Chef: Not those dumb enviroment activists. Get rid of them!!! I gave you a new TOOL, use it or YOU face the consequences!
+(silently) Im not getting my Hands dirty.
+And wash it off afterwards!
+
+*Police: (Radio) *Dead corpses found at factory*
+Why did you kill them? Hands behind your back!
+Choice: Comply - Shoot the Police officer
+1. Game Over
+2. Ahhhhhhhhhhh….. Officer down, officer down (dies) … … … (backup arrives) … … … 
+Choice Give up - shoot them also
+1. Game Over
+2. (You try to shoot the backup) (Your gun jams) (They kill you) Suspect down, I repeat, Suspect down!
+
+*Chef: Nooooo, all our stuff is broken, why did the f*cking power cut off so Long?
+Choice: Sorry! - XD
+1. Nothing sorry, get out of here GAME OVER
+2. You think this is funny (draws gun) … (you die) GAME OVER
+
+Police: What the f*ck is going on, everything is radiating. Just look at the river
+Chef: What do you mean, we have excellent Sales, good Job!
+Police: No, Im taking you to jail, this is not OK!
+Chef: (draws gun) o hell naw, im not going nowhere. Say goodbye
+Choice: shoot ceo - Guys calm down! We can handle this the easy way!
+1. (you draw your gun) … (you shoot) … the ceo dies... GAME OVER
+2. (the ceo shoots the Police man) … (the ceo shoots you) … (you die) … GAME OVER
