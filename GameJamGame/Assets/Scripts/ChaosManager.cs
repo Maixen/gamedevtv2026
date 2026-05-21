@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 
+public enum ChaosType
+{
+    Fire, Pole, Strike, Corpse
+}
+
 public class ChaosManager : MonoBehaviour
 {
     public static float chaosLevel = 0f; // Zwischen 0 und 1
@@ -26,6 +31,18 @@ public class ChaosManager : MonoBehaviour
     private Vignette ppV;
     private Grain ppG;
     private ChromaticAberration ppC;
+
+    [Space]
+    [Space]
+
+    [SerializeField] private GameObject chaosMeter;
+    private float targetChaos;
+    [SerializeField] private float chaosGrowSpeed;
+    [SerializeField] private ChaosType failType;
+    [SerializeField] private int[] amountToFail;
+    [SerializeField] private int[] problems;
+    private bool safe = true;
+    
 
     private void Awake()
     {
@@ -70,15 +87,84 @@ public class ChaosManager : MonoBehaviour
         ppC.intensity.value = ConvertVector2ToFloatViaChaosMultiplier(ChromaticAbberation);
     }
 
-    private void Update()
-    {
-        
-    }
-
     private float ConvertVector2ToFloatViaChaosMultiplier(Vector2 vec)
     {
         float difference = Mathf.Abs(vec.y - vec.x);
         float subVal = difference * chaosLevel;
         return Mathf.Min(vec.x, vec.y) + subVal;
+    }
+
+    private void Update()
+    {
+        if (GameManager.paused)
+        {
+            return;
+        }
+        if (targetChaos > chaosLevel || ModeManager.fuseIsOn)
+        {
+            chaosLevel = Lerp(chaosLevel,targetChaos,chaosGrowSpeed);
+        }
+        if(chaosLevel >= 1)
+        {
+            EndGame();
+        }
+    }
+
+    private float Lerp(float based, float target,float timeMult)
+    {
+        return based + (target - based) * timeMult * Time.deltaTime;
+    }
+
+    public void AddProblem(ChaosType type)
+    {
+        problems[(int)type]++;
+        UpdateChaos();
+    }
+
+    public void FixProblem(ChaosType type)
+    {
+        problems[(int)type]--;
+        if(problems[(int)type] < 0)
+        {
+            problems[(int)type] = 0;
+        }
+        UpdateChaos();
+    }
+
+    private void UpdateChaos()
+    {
+        float problemPercentage = 0;
+        for(int i = 0; i < problems.Length; i++)
+        {
+            float percentage = (float)problems[i] / amountToFail[i];
+            if (problemPercentage < percentage)
+            {
+                failType = (ChaosType)i;
+                problemPercentage = percentage;
+            }
+        }
+        if(problemPercentage == 0)
+        {
+            ModeManager.instance.SafeAgain();
+        }
+        targetChaos = problemPercentage;
+    }
+
+    private void EndGame()
+    {
+        GameManager.instance.GamePauseRequest();
+        print("Verloren");
+        switch(failType)
+        {
+            //Pack hier die verschiedenen Lose Dialoge rein
+            case ChaosType.Fire:
+                break;
+            case ChaosType.Pole:
+                break;
+            case ChaosType.Strike:
+                break;
+            case ChaosType.Corpse:
+                break;
+        }
     }
 }

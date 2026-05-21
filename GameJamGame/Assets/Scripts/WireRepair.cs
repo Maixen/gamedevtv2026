@@ -97,7 +97,7 @@ public class WireRepair : MonoBehaviour
                 print("End of Broken");
                 waitedFor = 0;
                 breakStage = Stages.Dislocated;
-                GameManager.instance.NewProblem();
+                ChaosManager.instance.AddProblem(ChaosType.Pole);
                 Vector3 breakForce = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * Random.Range(knockForce.x, knockForce.y);
                 physics.AddForce(breakForce, ForceMode.Impulse);
                 transform.position += breakForce * Time.deltaTime;
@@ -131,7 +131,7 @@ public class WireRepair : MonoBehaviour
                 helpfulSprite.enabled = false;
                 gameObject.GetComponent<SphereCollider>().enabled = false;
                 timeToWait = Random.Range(breakTime.x, breakTime.y);
-                GameManager.instance.SolvedProblem();
+                ChaosManager.instance.FixProblem(ChaosType.Pole);
                 break;
 
         }

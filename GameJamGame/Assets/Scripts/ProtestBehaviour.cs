@@ -32,7 +32,7 @@ public class ProtestBehaviour : MonoBehaviour
                 if (goalIndex < goals.Count)
                 {
                     atEnd = true;
-                    GameManager.instance.NewProblem();
+                    ChaosManager.instance.AddProblem(ChaosType.Strike);
                 }
             }
         }
@@ -42,7 +42,7 @@ public class ProtestBehaviour : MonoBehaviour
         if(ModeManager.mode != Mode.Gun)
             return;
         if(atEnd)
-            GameManager.instance.SolvedProblem();
+            ChaosManager.instance.FixProblem(ChaosType.Strike);
         gameObject.layer = 0;
         alive = false;
         anim.SetBool("die",true);

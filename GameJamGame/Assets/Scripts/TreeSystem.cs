@@ -120,7 +120,7 @@ public class TreeSystem : MonoBehaviour
     public void Ignite()
     {
         if (onFire) return;
-        GameManager.instance.NewProblem();
+        ChaosManager.instance.AddProblem(ChaosType.Fire);
         onFire = true;
         print("FEUER!");
 
@@ -133,7 +133,7 @@ public class TreeSystem : MonoBehaviour
     public void Extinguish()
     {
         onFire = false;
-        GameManager.instance.SolvedProblem();
+        ChaosManager.instance.FixProblem(ChaosType.Fire);
         deathTimer = 0;
         catchOnTimer = 0;
 

@@ -101,10 +101,6 @@ public class ModeManager : MonoBehaviour
 
     public void ToggleSwitch()
     {
-        if(!GameManager.instance.IsSafe())
-        {
-            return;
-        }
         SetSwitch(!fuseIsOn);
     }
 
@@ -134,7 +130,13 @@ public class ModeManager : MonoBehaviour
     public void ShortCircuit()
     {
         fuseRenderer.sprite = fuseOff;
+        canClickFuse = false;
         SetSwitch(false);
+    }
+
+    public void SafeAgain()
+    {
+        canClickFuse = true;
     }
 
     private void Update()
