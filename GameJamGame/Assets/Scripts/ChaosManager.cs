@@ -35,7 +35,9 @@ public class ChaosManager : MonoBehaviour
     [Space]
     [Space]
 
-    [SerializeField] private GameObject chaosMeter;
+    [SerializeField] private RectTransform chaosMeter;
+    float maxLength = 500;
+    [SerializeField] private RectTransform chaosBar;
     private float targetChaos;
     [SerializeField] private float chaosGrowSpeed;
     [SerializeField] private ChaosType failType;
@@ -58,6 +60,10 @@ public class ChaosManager : MonoBehaviour
         profile.TryGetSettings(out ppC);
 
         UpdateEffects();
+
+        Rect rect = chaosMeter.rect;
+        maxLength = rect.height;
+        
     }
 
     public bool ChaosLevelChangeRequest(float change, bool force)
@@ -104,7 +110,16 @@ public class ChaosManager : MonoBehaviour
         {
             chaosLevel = Lerp(chaosLevel,targetChaos,chaosGrowSpeed);
         }
-        if(chaosLevel >= 1)
+        if(chaosLevel == 0)
+        {
+            chaosBar.rect.Set(chaosBar.rect.x, chaosBar.rect.y, chaosBar.rect.width, 0);
+        }
+        else
+        {
+            chaosBar.rect.Set(chaosBar.rect.x, chaosBar.rect.y, chaosBar.rect.width, 500 * chaosLevel);
+        }
+        print(chaosLevel);
+        if (chaosLevel >= 1)
         {
             EndGame();
         }
