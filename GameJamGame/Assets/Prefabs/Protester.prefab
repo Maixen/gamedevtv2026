@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 859128713166250496}
   - component: {fileID: 4531215980865450588}
   - component: {fileID: 3918370250865750229}
-  - component: {fileID: 4315807323702647511}
+  - component: {fileID: 5045777420731246947}
+  - component: {fileID: 6557442984229472978}
   m_Layer: 6
   m_Name: Protester
   m_TagString: Untagged
@@ -70,11 +71,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433620532c916d94c8cb098bfc896f48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {x: 22.03, y: 0.94, z: -47.25}
-  walkSpeed: 0.1
+  goals: []
+  walkSpeed: 5
   anim: {fileID: 859128713166250496}
   trigger: {fileID: 3918370250865750229}
   deathTimer: 3
+  minDist: 3
 --- !u!114 &3918370250865750229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,8 +91,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClicked: 0
   maxClickDelay: 0.1
---- !u!65 &4315807323702647511
-BoxCollider:
+--- !u!54 &5045777420731246947
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6806304964734032287}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &6557442984229472978
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,9 +136,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.3410158, y: 1.8947115, z: 1.4448967}
-  m_Center: {x: -0.052730083, y: 0.9355631, z: -0.038808823}
+  serializedVersion: 2
+  m_Radius: 0.59700775
+  m_Height: 2.024308
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.85914147, z: 0}
 --- !u!1001 &6282316299406626220
 PrefabInstance:
   m_ObjectHideFlags: 0

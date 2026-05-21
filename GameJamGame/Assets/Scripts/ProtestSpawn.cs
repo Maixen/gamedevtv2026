@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ProtestSpawn : MonoBehaviour
@@ -33,7 +34,7 @@ public class ProtestSpawn : MonoBehaviour
         for(int i = 0; i < Random.Range(spawnAmount.x,spawnAmount.y); i++)
         {
             ProtestBehaviour prot = Instantiate(protester, transform.position + new Vector3(Random.Range(spawnRange.x, spawnRange.y), 0, Random.Range(spawnRange.x, spawnRange.y)),Quaternion.identity).GetComponent<ProtestBehaviour>();
-            prot.SetGoal(goals[Random.Range(0,goals.Length)]);
+            prot.SetGoal(goals.ToList<Vector3>());
         }
     }
 }

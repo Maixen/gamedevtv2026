@@ -162,8 +162,8 @@ MonoBehaviour:
   knockForce: {x: 5, y: 10}
   fire: {fileID: 4230129225384837027}
   ChoppedTreePrefab: {fileID: 2690742420229011154, guid: 7bb725d155e9f8b498ab747116ac2f15, type: 3}
-  maxHeight: 3
-  minDistanceFromWire: 3
+  maxHeight: 2
+  minDistanceFromWire: 5
   fireRange: 5
   onFire: 0
   catchOnTime: 5

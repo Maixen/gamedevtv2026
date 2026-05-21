@@ -91,13 +91,10 @@ public class TreeSystem : MonoBehaviour
                 CatchOn();
             }
         }
-        else if(GameManager.instance.IsSafe())
+        else if (manager.CheckDistanceFromPoles(tree.position, tree.position + Vector3.up * tree.localScale.y) <= minDistanceFromWire)
         {
-            if (manager.CheckDistanceFromPoles(tree.position, tree.position + Vector3.up * tree.localScale.y) <= minDistanceFromWire)
-            {
-                print("Der Pole ist zu nah!");
-                Ignite();
-            }
+            print("Der Pole ist zu nah!");
+            Ignite();
         }
     }
 

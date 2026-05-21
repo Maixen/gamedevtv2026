@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class WireRepair : MonoBehaviour
 {
+    [SerializeField] private enum Stages
+    {
+        Intact,Broken,Dislocated
+    }
+
     [SerializeField]
     private Vector2 firstBreakWaitTime;
     [SerializeField]
     private Vector2 breakTime;
+    [SerializeField] private float dislocateTime;
     [SerializeField]
     private Vector2 knockForce;
     [SerializeField]
@@ -17,7 +23,7 @@ public class WireRepair : MonoBehaviour
     private bool breakable;
     [SerializeField] float maxHeight;
 
-    [SerializeField] private bool broken = false;
+    [SerializeField] private Stages breakStage = Stages.Intact;
     [SerializeField] private MeshRenderer helpfulSprite;
     private ClickTrigger trigger;
     private Rigidbody physics;
@@ -40,6 +46,7 @@ public class WireRepair : MonoBehaviour
         gameObject.layer = 0;
         startPos = transform.position;
         timeToWait = Random.Range(firstBreakWaitTime.x, firstBreakWaitTime.y);
+        helpfulSprite.enabled = false;
     }
 
     // Update is called once per frame
@@ -47,59 +54,86 @@ public class WireRepair : MonoBehaviour
     {
         if (!breakable)
             return;
-        if (GameManager.paused == true) { return; } // Funktioniert wahrscheinlich nicht!!!
-        if(!broken)
+        if (GameManager.paused == true) { return; }
+        switch(breakStage)
         {
-            physics.Sleep();
-            helpfulSprite.enabled = false;
-            gameObject.GetComponent<SphereCollider>().enabled = false;
-            if (Vector3.Distance(transform.position, startPos) > 1)
-            {
-                transform.position = Vector3.Lerp(transform.position, startPos, repairTweenSpeed * Time.deltaTime);
-                return;
-            }
-            waitedFor += Time.deltaTime;
-            if (waitedFor < timeToWait)
-                return;
-            GameManager.instance.NewProblem();
-            waitedFor = 0;
-            helpfulSprite.enabled = true;
-            broken = true;
-            transform.position = startPos;
-            physics.WakeUp();
-            Vector3 breakForce = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * Random.Range(knockForce.x,knockForce.y);
-            physics.AddForce(breakForce,ForceMode.Impulse);
-            transform.position += breakForce * Time.deltaTime;
-            gameObject.layer = clickableLayer;
-        }
-        gameObject.layer = clickableLayer;
-        helpfulSprite.enabled = true;
-        gameObject.GetComponent<SphereCollider>().enabled = true;
-        if (!trigger.isClicked)
-        {
-            return;
-        }
-        if(ModeManager.mode != Mode.Screw)
-        {
-            return;
-        }
-        physics.Sleep();
-        transform.position = MouseCaster.collisionPos + Vector3.up * 3;
-        if(transform.position.y > maxHeight)
-        {
-            transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
-        }
-        print(Vector3.Distance(transform.position, startPos));
-        if(Vector3.Distance(transform.position,startPos) > 5)
-        {
-            return;
-        }
-        print("Done");
-        broken = false;
-        physics.Sleep();
-        gameObject.layer = 0;
-        timeToWait = Random.Range(breakTime.x,breakTime.y);
-        GameManager.instance.SolvedProblem();
+            case Stages.Intact:
+                physics.Sleep();
+                
+                if (Vector3.Distance(transform.position, startPos) > 1)
+                {
+                    transform.position = Vector3.Lerp(transform.position, startPos, repairTweenSpeed * Time.deltaTime);
+                    return;
+                }
+                if (waitedFor < timeToWait)
+                {
+                    waitedFor += Time.deltaTime;
+                    return;
+                }
+                breakStage = Stages.Broken;
+                print("End of Intact");
+                waitedFor = 0;
+                helpfulSprite.enabled = true;
+                gameObject.GetComponent<SphereCollider>().enabled = true;
+                gameObject.layer = clickableLayer;
+                break;
 
+            case Stages.Broken:
+                
+                if (waitedFor < dislocateTime)
+                {
+                    waitedFor += Time.deltaTime;
+                    if(trigger.isClicked && ModeManager.mode == Mode.Screw)
+                    {
+                        breakStage = Stages.Intact;
+                        waitedFor = 0;
+                        helpfulSprite.enabled = false;
+                        gameObject.GetComponent<SphereCollider>().enabled = false;
+                        gameObject.layer = 0;
+                        print("Fixed");
+                    }
+                    return;
+                }
+                print("End of Broken");
+                waitedFor = 0;
+                breakStage = Stages.Dislocated;
+                GameManager.instance.NewProblem();
+                Vector3 breakForce = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * Random.Range(knockForce.x, knockForce.y);
+                physics.AddForce(breakForce, ForceMode.Impulse);
+                transform.position += breakForce * Time.deltaTime;
+                gameObject.layer = clickableLayer;
+                break;
+
+            case Stages.Dislocated:
+                physics.WakeUp();
+                if (!trigger.isClicked)
+                {
+                    return;
+                }
+                if (ModeManager.mode != Mode.Screw)
+                {
+                    return;
+                }
+                physics.Sleep();
+                transform.position = MouseCaster.collisionPos + Vector3.up * 3;
+                if (transform.position.y > maxHeight)
+                {
+                    transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z);
+                }
+                if (Vector3.Distance(transform.position, startPos) > 5)
+                {
+                    return;
+                }
+                print("Saved");
+                breakStage = Stages.Intact;
+                physics.Sleep();
+                gameObject.layer = 0;
+                helpfulSprite.enabled = false;
+                gameObject.GetComponent<SphereCollider>().enabled = false;
+                timeToWait = Random.Range(breakTime.x, breakTime.y);
+                GameManager.instance.SolvedProblem();
+                break;
+
+        }
     }
 }
