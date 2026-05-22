@@ -26,7 +26,7 @@ public class MouseCaster : MonoBehaviour
         Vector2 mousePos = Input.mousePosition;
         RaycastHit hit;
         Ray viewRay = cam.ScreenPointToRay(mousePos);
-        Physics.Raycast(viewRay, out hit);
+        if(!Physics.Raycast(viewRay, out hit)) return;
         lastHit = hit;
         hasHit = true;
         if (hit.collider.gameObject.layer == 5)

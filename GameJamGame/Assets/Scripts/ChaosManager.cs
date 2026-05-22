@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UIElements;
 
 public enum ChaosType
 {
@@ -37,9 +39,10 @@ public class ChaosManager : MonoBehaviour
 
     [SerializeField] private RectTransform chaosMeter;
     float maxLength = 500;
-    [SerializeField] private RectTransform chaosBar;
+    [SerializeField] private Transform chaosBar;
     private float targetChaos;
     [SerializeField] private float chaosGrowSpeed;
+    [SerializeField] private float chaosShrinkSpeed;
     [SerializeField] private ChaosType failType;
     [SerializeField] private int[] amountToFail;
     [SerializeField] private int[] problems;
@@ -49,6 +52,7 @@ public class ChaosManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        
     }
 
     private void Start()
@@ -106,19 +110,15 @@ public class ChaosManager : MonoBehaviour
         {
             return;
         }
-        if (targetChaos > chaosLevel || ModeManager.fuseIsOn)
+        if (targetChaos > chaosLevel)
         {
             chaosLevel = Lerp(chaosLevel,targetChaos,chaosGrowSpeed);
         }
-        if(chaosLevel == 0)
+        else if(ModeManager.fuseIsOn && chaosLevel > targetChaos)
         {
-            chaosBar.rect.Set(chaosBar.rect.x, chaosBar.rect.y, chaosBar.rect.width, 0);
+            chaosLevel = Math.Max(chaosLevel - Time.deltaTime * chaosShrinkSpeed,0);
         }
-        else
-        {
-            chaosBar.rect.Set(chaosBar.rect.x, chaosBar.rect.y, chaosBar.rect.width, 500 * chaosLevel);
-        }
-        print(chaosLevel);
+            chaosBar.localScale = new Vector3(0.9f, chaosLevel, 0);
         if (chaosLevel >= 1)
         {
             EndGame();
@@ -161,9 +161,15 @@ public class ChaosManager : MonoBehaviour
         if(problemPercentage == 0)
         {
             ModeManager.instance.SafeAgain();
+            print("Kein Problem");
         }
-        targetChaos = problemPercentage;
+        else
+        {
+            ModeManager.instance.ShortCircuit();
+        }
+            targetChaos = problemPercentage;
     }
+
 
     private void EndGame()
     {

@@ -29,7 +29,7 @@ public class ProtestBehaviour : MonoBehaviour
             if(Vector3.Distance(transform.position, goals[goalIndex]) < minDist)
             {
                 goalIndex++;
-                if (goalIndex < goals.Count)
+                if (goalIndex == goals.Count)
                 {
                     atEnd = true;
                     ChaosManager.instance.AddProblem(ChaosType.Strike);

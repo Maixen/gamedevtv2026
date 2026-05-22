@@ -167,7 +167,7 @@ MonoBehaviour:
   fireRange: 5
   onFire: 0
   catchOnTime: 5
-  deadAfterTime: 15
+  deadAfterTime: 3
 --- !u!65 &7302040350163340962
 BoxCollider:
   m_ObjectHideFlags: 0

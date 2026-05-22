@@ -106,18 +106,12 @@ public class ModeManager : MonoBehaviour
 
     public void SetSwitch(bool on)
     {
+        if (GameManager.paused) return;
         if (!on) { fuseIsOn = false; fuseRenderer.sprite = fuseOff; return; }
-        if (!canClickFuse) { return; }
-        if (!fuseForceOff)
+        if (canClickFuse)
         {
             fuseIsOn = true; fuseRenderer.sprite = fuseOn;
             return;
-        }
-        else
-        {
-            canClickFuse = false;
-            fuseRenderer.sprite = fuseOn;
-            Invoke(nameof(ToggleSwitchFollow), fuseDelay);
         }
     }
 

@@ -57,6 +57,10 @@ public class TreeSystem : MonoBehaviour
         if(maxHeight > tree.localScale.y)
         {
             tree.localScale += new Vector3(growSize * Time.deltaTime, growSize * Time.deltaTime, growSize * Time.deltaTime);
+            if(maxHeight <= tree.localScale.y)
+            {
+                Invoke(nameof(Cut),deadAfterTime);
+            }
         }
         if (trigger.isClicked)
         {
@@ -100,6 +104,7 @@ public class TreeSystem : MonoBehaviour
 
     public void Cut()
     {
+        if (tree.gameObject.layer == 0) return;
         Transform fallingTree = Instantiate(tree, tree.position, Quaternion.identity);
         ChoppedTreeScript chopped = Instantiate(ChoppedTreePrefab,fallingTree).GetComponent<ChoppedTreeScript>();
         fallingTree.gameObject.layer = 0;
