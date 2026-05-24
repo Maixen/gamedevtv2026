@@ -14,6 +14,12 @@ public class GameManager : MonoBehaviour
         GameManager.instance = this;
     }
 
+    private void Start()
+    {
+        Debug.Log(paused);
+        DialogManager.instance.StartDialogue(0);
+    }
+
     public void GamePauseRequest()
     {
         ModeManager.instance.ChangeMode(0);

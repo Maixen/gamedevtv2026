@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public enum ChaosType
@@ -47,6 +48,8 @@ public class ChaosManager : MonoBehaviour
     [SerializeField] private int[] amountToFail;
     [SerializeField] private int[] problems;
     private bool safe = true;
+
+    [SerializeField] private GameObject lostText;
     
 
     private void Awake()
@@ -67,6 +70,8 @@ public class ChaosManager : MonoBehaviour
 
         Rect rect = chaosMeter.rect;
         maxLength = rect.height;
+
+        lostText.SetActive(false);
         
     }
 
@@ -123,6 +128,7 @@ public class ChaosManager : MonoBehaviour
         {
             EndGame();
         }
+        UpdateEffects();
     }
 
     private float Lerp(float based, float target,float timeMult)
@@ -175,7 +181,8 @@ public class ChaosManager : MonoBehaviour
     {
         GameManager.instance.GamePauseRequest();
         print("Verloren");
-        switch(failType)
+        lostText.SetActive(true);
+        switch (failType)
         {
             //Pack hier die verschiedenen Lose Dialoge rein
             case ChaosType.Fire:
@@ -187,5 +194,11 @@ public class ChaosManager : MonoBehaviour
             case ChaosType.Corpse:
                 break;
         }
+        //Invoke(nameof(ReloadScene), 3f);
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }
