@@ -51,6 +51,6 @@ public class TimeManager : MonoBehaviour
 
     public string getTime()
     {
-        return timeDisplay.text;
+        return timeDisplay.text.ToString();
     }
 }
