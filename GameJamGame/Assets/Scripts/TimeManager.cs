@@ -48,4 +48,9 @@ public class TimeManager : MonoBehaviour
         }
         timeDisplay.text = minString + ":" + secString;
     }
+
+    public string getTime()
+    {
+        return timeDisplay.text;
+    }
 }

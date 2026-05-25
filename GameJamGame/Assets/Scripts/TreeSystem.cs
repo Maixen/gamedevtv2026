@@ -57,10 +57,10 @@ public class TreeSystem : MonoBehaviour
         if(maxHeight > tree.localScale.y)
         {
             tree.localScale += new Vector3(growSize * Time.deltaTime, growSize * Time.deltaTime, growSize * Time.deltaTime);
-            if(maxHeight <= tree.localScale.y)
+            /*if(maxHeight <= tree.localScale.y)
             {
                 Invoke(nameof(Cut),deadAfterTime);
-            }
+            }*/
         }
         if (trigger.isClicked)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +18,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Log(paused);
-        DialogManager.instance.StartDialogue(0);
+        //DialogManager.instance.StartDialogue(0);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void GamePauseRequest()

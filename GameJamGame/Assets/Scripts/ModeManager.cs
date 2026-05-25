@@ -18,6 +18,8 @@ public class ModeManager : MonoBehaviour
     public static bool fuseForceOff;
     public static Mode mode;
     public static ModeManager instance;
+
+    [SerializeField] private AudioSource clicker;
     [SerializeField] private GameObject[] tools;
     [SerializeField] private Animator[] toolAnims;
 
@@ -45,7 +47,10 @@ public class ModeManager : MonoBehaviour
         modeScrewV = modeScrewC.localScale;
         modeGunV = modeGunC.localScale;
 
-        ChangeMode(0);
+        for (int i = 0; i < tools.Length; i++)
+        {
+            tools[i].SetActive(false);
+        }
         canClickFuse = true;
         SetSwitch(true);
     }
@@ -61,6 +66,7 @@ public class ModeManager : MonoBehaviour
             tools[i].SetActive(i + 1 == mode);
         }
         UpdateVisuals();
+        
     }
 
     public void UpdateVisuals()
@@ -107,7 +113,7 @@ public class ModeManager : MonoBehaviour
     public void SetSwitch(bool on)
     {
         if (GameManager.paused) return;
-        if (!on) { fuseIsOn = false; fuseRenderer.sprite = fuseOff; return; }
+        if (!on) { fuseIsOn = false; clicker.Play(); fuseRenderer.sprite = fuseOff; return; }
         if (canClickFuse)
         {
             fuseIsOn = true; fuseRenderer.sprite = fuseOn;

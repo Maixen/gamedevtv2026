@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
@@ -38,6 +39,8 @@ public class ChaosManager : MonoBehaviour
     [Space]
     [Space]
 
+
+    [SerializeField] private TextMeshProUGUI loseText;
     [SerializeField] private RectTransform chaosMeter;
     float maxLength = 500;
     [SerializeField] private Transform chaosBar;
@@ -182,6 +185,7 @@ public class ChaosManager : MonoBehaviour
         GameManager.instance.GamePauseRequest();
         print("Verloren");
         lostText.SetActive(true);
+        loseText.text = "You kept the balance for " + TimeManager.instance.getTime() + "!";
         switch (failType)
         {
             //Pack hier die verschiedenen Lose Dialoge rein
